@@ -34,7 +34,11 @@ const handleFileUpload = (req, res, next) => {
         message: "File upload error. Please upload the file in JPEG, JPG, or PNG format only",
       });
     } else if (err) {
-      return res.status(500).json({ message: "Internal server error" });
+      if (err.message === "Only jpeg, jpg, and png files are allowed!") {
+        return res.status(400).json({ message: err.message });
+      } else {
+        return res.status(500).json({ message: "Internal server error" });
+      }
     }
     next();
   });
