@@ -25,13 +25,16 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({ storage: storage, fileFilter: fileFilter }).single("foodImage");
+const upload = multer({ storage: storage, fileFilter: fileFilter }).single(
+  "foodImage"
+);
 
 const handleFileUpload = (req, res, next) => {
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       return res.json({
-        message: "File upload error. Please upload the file in JPEG, JPG, or PNG format only",
+        message:
+          "File upload error. Please upload the file in JPEG, JPG, or PNG format only",
       });
     } else if (err) {
       if (err.message === "Only jpeg, jpg, and png files are allowed!") {
@@ -56,7 +59,7 @@ const addFood = async (req, res) => {
     const newFood = await foodModel.create({
       foodName,
       foodPrice,
-      foodImage: `../uploads/foodImages/${req.file.filename}`, // Use filename provided by multer
+      foodImage: `../uploads/foodImages/${req.file.filename}`, 
       foodDescription,
     });
     console.log(newFood);

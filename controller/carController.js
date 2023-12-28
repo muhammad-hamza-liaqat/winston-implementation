@@ -1,9 +1,39 @@
 const carModel = require("../models/carModel");
+const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 const getallData = async (req, res) => {
-  //   res.end("hello");
-  const result = await carModel.find({});
-  res.status(200).json(result);
+  try {
+    const { page = 1, limit = 10, model } = req.query;
+
+    // Build the filter object based on the "model" parameter
+    const filter = model ? { model: { $regex: new RegExp(model, 'i') } } : {};
+
+    const result = await carModel
+      .find(filter)
+      .skip((page - 1) * limit)
+      .limit(Number(limit));
+
+    const totalCount = await carModel.countDocuments(filter);
+
+    res.status(200).json({
+      message: 'data fetched',
+      data: result,
+      pagination: {
+        page: Number(page),
+        limit: Number(limit),
+        total: totalCount,
+        totalPages: Math.ceil(totalCount / limit),
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
+
+
+
 
 const addCar = async (req, res) => {
   const {

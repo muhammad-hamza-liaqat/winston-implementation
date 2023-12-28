@@ -38,6 +38,7 @@ let carSchema = new mongoose.Schema({
     required: true,
   },
 });
+carSchema.index({ model: 'text', brand: 'text' });
 
 let CarModel = mongoose.model('cars', carSchema); 
 
