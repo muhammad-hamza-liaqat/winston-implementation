@@ -10,6 +10,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// routes import
+const car = require("./routes/carRoutes");
+
+app.use("/api/car",car);
+
 // server
 app.listen(process.env.port, () => {
   console.log(`server running at localhost:${process.env.port}/`);
