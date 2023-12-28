@@ -1,8 +1,8 @@
 const carModel = require("../models/carModel");
 const getallData = async (req, res) => {
-//   res.end("hello");
-const result = await carModel.find({})
-res.status(200).json(result)
+  //   res.end("hello");
+  const result = await carModel.find({});
+  res.status(200).json(result);
 };
 
 const addCar = async (req, res) => {
