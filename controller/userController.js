@@ -13,7 +13,7 @@ const registerUser = async (req, res) => {
       ...req.body,
       password: hashedPassword,
     });
-    console.log(newUser)
+    console.log(newUser);
     return res
       .status(201)
       .json({ message: "user created successfully!", user: newUser });
@@ -23,4 +23,22 @@ const registerUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser };
+const login = async (req, res) => {
+  const { userEmail, password } = req.body;
+  try {
+    const userLogin = await userModel.findOne({ userEmail: userEmail });
+    if (!userLogin) {
+      return res.status(400).json({ message: "invalid user or password" });
+    }
+    const matchPassword = bcrypt.compare(password, userLogin.password);
+    if (!matchPassword) {
+      return res.status(400).json({ message: "invalid user or password" });
+    }
+    console.log("user login");
+    return res.status(201).json({ message: "user login" });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+module.exports = { registerUser, login };
