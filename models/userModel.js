@@ -36,6 +36,16 @@ let userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  isVerified: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
 });
 
 const userModel = mongoose.model("users", userSchema);
