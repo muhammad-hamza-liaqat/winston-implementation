@@ -1,13 +1,17 @@
 const userModel = require("../models/userModel");
 const registerUser = async (req, res) => {
-  // res.end("hello")
-  const { userName, userEmail, phoneNumber, password, cnic } = req.body;
-  if (!userName || !userEmail || !phoneNumber || !password || !cnic) {
-    return res.status(400).json({ message: "all fields are required!" });
+  if (
+    !req.body.userName ||
+    !req.body.userEmail ||
+    !req.body.password ||
+    !req.body.password ||
+    !req.body.cnic ||
+    !req.body.phoneNumber
+  ) {
+    return res.status(400).json({ message: "all fields are required" });
   }
   try {
     const newUser = await userModel.create({ ...req.body });
-    await newUser.save();
     if (newUser) {
       console.log("user saved successfully!");
       return res
