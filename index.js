@@ -13,9 +13,11 @@ app.use(express.urlencoded({ extended: true }));
 // routes import
 const car = require("./routes/carRoutes");
 const food = require("./routes/foodRoutes");
+const user = require("./routes/userRoutes");
 
-app.use("/api/car",car);
-app.use("/api/food",food)
+app.use("/api/car", car);
+app.use("/api/food", food);
+app.use("/api/user", user);
 
 // server
 app.listen(process.env.port, () => {
